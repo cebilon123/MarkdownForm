@@ -1,5 +1,14 @@
 package main
 
+import (
+	"core/decode"
+)
+
 func main() {
-	println("Test")
+	var a = decode.Decoder{
+		DecodingHandler: &decode.MarkdownDecoder{
+			FileContentText: "## Title",
+		},
+	}
+	a.DecodingHandler.Decode()
 }
