@@ -41,5 +41,6 @@ type ValueType int
 
 const (
 	ValueTypeNone    ValueType = iota
+	ValueTypeNewLine ValueType = iota
 	ValueTypeHeading ValueType = iota
 )
