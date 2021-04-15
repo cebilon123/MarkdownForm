@@ -2,8 +2,6 @@ package decode
 
 import (
 	"core"
-	"fmt"
-	"reflect"
 )
 
 type Decoder struct {
@@ -11,19 +9,18 @@ type Decoder struct {
 }
 
 type MarkdownDecoder struct {
-	FileContentText string
 }
 
-func (d *Decoder) Decode() *core.Form {
-	return d.DecodingHandler.Decode()
+func (d *Decoder) Decode(linesChannel chan string) *core.Form {
+	return d.DecodingHandler.Decode(linesChannel)
 }
 
-func (m *MarkdownDecoder) Decode() *core.Form {
-	if len(m.FileContentText) == 0 {
-		panic(fmt.Sprintf("No body to decode from, type: %s", reflect.TypeOf(m).Elem().Name()))
-		return nil
+func (m *MarkdownDecoder) Decode(linesChannel chan string) *core.Form {
+	println("Starting decoding")
+	for msg := range linesChannel {
+		println(msg)
 	}
 
-	panic("implement me")
+	println("End of decoding")
+	return &core.Form{}
 }
-

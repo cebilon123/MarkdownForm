@@ -32,11 +32,13 @@ func (mr *MarkdownReader) ReadMarkdownContentToChannel(markdownContent string) {
 			line += string(markdownContent[i])
 		}
 		if wasSingleSidedOperator && string(markdownContent[i]) == " " || i == len(markdownContent)-1 {
+			println("send")
 			mr.ReadChannel <- line
 			line = ""
 			wasSingleSidedOperator = false
 		}
 		if wasDoubleSidedOperator && isDoubleSidedSeparator(i, markdownContent) || i == len(markdownContent)-1 {
+			println("send")
 			line += string(markdownContent[i])
 			mr.ReadChannel <- line
 			line = ""
@@ -46,8 +48,6 @@ func (mr *MarkdownReader) ReadMarkdownContentToChannel(markdownContent string) {
 			break
 		}
 	}
-
-	close(mr.ReadChannel)
 }
 
 func isSingleSidedSeparator(index int, content string) bool {

@@ -1,14 +1,17 @@
 package main
 
-import "core/read"
+import (
+	"core/decode"
+	"core/read"
+)
 
 func main() {
 	mr := read.MarkdownReader{
-		ReadChannel: make(chan string),
+		ReadChannel: make(chan string, 1),
 	}
+	decoder := decode.Decoder{DecodingHandler: &decode.MarkdownDecoder{}}
 
-	go mr.ReadMarkdownContentToChannel("**test** ##dupka **XD** **lol")
-	for elem := range mr.ReadChannel {
-		println(elem)
-	}
+	go mr.ReadMarkdownContentToChannel("##dupka **XD** **lol**")
+	decoder.Decode(mr.ReadChannel)
+	<- mr.ReadChannel
 }
