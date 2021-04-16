@@ -5,3 +5,4 @@
 [i=checkbox, alias=email]**I have read rules, and I accept them**
 
 [btn, enabled=email&&checkbox]Join newsletter
+This is none type text, write it as it is

@@ -2,10 +2,10 @@ package content
 
 import (
 	"globals/separators"
-	strings "strings"
+	"strings"
 )
 
-func Decode(channel chan<- string) *Form {
+func CreateFormFromChannel(channel <-chan string) *Form {
 	results := NewForm()
 
 	for line := range channel {
@@ -23,7 +23,7 @@ func Decode(channel chan<- string) *Form {
 }
 
 func resolveType(line string) ValueType {
-	if strings.HasPrefix(line, separators.NewLineSeparatorStart.String()) {
+	if len(line) == 0 {
 		return NewLine
 	}
 	if strings.HasPrefix(line, separators.BtnSeparatorStart.String()) {
