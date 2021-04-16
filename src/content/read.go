@@ -24,10 +24,12 @@ func NewRead() *Read {
 	}
 }
 
+//ReadContent reads given content string line by line and send it to channel
 func (r Read) ReadContent(content string) {
 	defer func() {
 		close(r.Channel)
 	}()
+
 	scanner := bufio.NewScanner(strings.NewReader(content))
 
 	for scanner.Scan() {
