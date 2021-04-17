@@ -15,9 +15,14 @@ func TestTryMapToParams(t *testing.T) {
 		want []Param
 	}{
 		{name: "empty input", args: args{s: ""}, want: nil},
+		{name: "not valid prefix", args: args{s: "i=test,alias=best]"}, want: nil},
+		{name: "not valid input body", args: args{s: "[i,alias]"}, want: []Param{}},
 		{name: "valid input", args: args{s: "[i=checkbox, alias=rulesAccepted]"}, want: []Param{
 			{Key: "i", Value: "checkbox"},
 			{Key: "alias", Value: "rulesAccepted"},
+		}},
+		{name: "semi-valid input", args: args{s: "[i,alias=btn]"}, want: []Param{
+			{Key: "alias", Value: "btn"},
 		}},
 	}
 	for _, tt := range tests {

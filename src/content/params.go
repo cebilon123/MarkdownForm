@@ -19,15 +19,19 @@ func IsParamContainableType(valueType ValueType) bool {
 func TryMapToParams(s string) []Param {
 	params := make([]Param, 0)
 
-	if len(s) == 0 {
+	if len(s) == 0 || !strings.Contains(s, "[") || !strings.Contains(s, "]"){
 		return nil
 	}
 
-	str := strings.TrimLeft(strings.TrimRight(s, "["), "]")
+	str := strings.TrimLeft(strings.TrimRight(s, "]"), "[")
 	for _, param := range strings.Split(str, ",") {
 		param = strings.ReplaceAll(param, " ", "")
 
 		paramKeyValue := strings.Split(param, "=")
+
+		if len(paramKeyValue) < 2 {
+			continue
+		}
 
 		params = append(params, Param{
 			Key:   paramKeyValue[0],
