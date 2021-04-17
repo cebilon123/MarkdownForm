@@ -33,3 +33,25 @@ func TestTryMapToParams(t *testing.T) {
 		})
 	}
 }
+
+func TestIsParamContainableType(t *testing.T) {
+	type args struct {
+		valueType ValueType
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{name: "Is containable - button", args: args{valueType: ButtonLine}, want: true},
+		{name: "Is containable - input", args: args{valueType: InputLine}, want: true},
+		{name: "Is not containable - heading", args: args{valueType: HeadingLine}, want: false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := IsParamContainableType(tt.args.valueType); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("IsParamContainableType() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

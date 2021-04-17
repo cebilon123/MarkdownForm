@@ -6,25 +6,25 @@ import (
 )
 
 //BaseForm represents whole form object. Its build from slice of LineField
-//its simplified version of normal form object, which is much more advanced
+//its simplified version of normal form object, which is much more advanced.
 type BaseForm struct {
 	Fields []LineField
 }
 
-//NewForm creates new form with fields as slice of size 0
+//NewForm creates new form with fields as slice of size 0.
 func NewForm() *BaseForm {
 	return &BaseForm{
 		Fields: make([]LineField, 0),
 	}
 }
 
+//LineField represents line from markdown.
 type LineField struct {
 	Type  ValueType
 	Value string
 }
 
 type ValueType int
-
 const (
 	None ValueType = 0 + iota
 	NewLine
@@ -53,18 +53,18 @@ func (f *BaseForm) ToExtendedForm() *ExtendedForm {
 	form := NewExtendedForm()
 
 	for _, field := range f.Fields {
-		extendedField := field.toExtendedLineField()
+		extendedField := field.ToExtendedLineField()
 		form.Fields = append(form.Fields, extendedField)
 	}
 
 	return form
 }
 
-//toExtendedLineField converts LineField into ExtendedLineField. It cleans value from separators, convert found params
+//ToExtendedLineField converts LineField into ExtendedLineField. It cleans value from separators, convert found params
 //into params array of Param type. If LineField is classic .md line (e.g. ##heading or **title**) it will return
-//ExtendedLineField with params as nil. If LineField is an input/btn type it will return ExtendedLineField
+//ExtendedLineField with params as nil. If LineField is an input/btn type it will return ExtendedLineField.
 //with empty value and slice containing all valid params.
-func (lf *LineField) toExtendedLineField() ExtendedLineField {
+func (lf *LineField) ToExtendedLineField() ExtendedLineField {
 	if IsParamContainableType(lf.Type) {
 		tryMapToParams := TryMapToParams(lf.Value)
 
@@ -88,10 +88,11 @@ func (lf *LineField) toExtendedLineField() ExtendedLineField {
 	}
 }
 
+//getCleanedValueBasedOnType cleans string from separators.
 func getCleanedValueBasedOnType(s string, vt ValueType) string {
 	switch valueType := vt; valueType {
 	case HeadingLine:
-		return strings.TrimRight(s, separators.HeadingSeparatorStart.String())
+		return strings.TrimLeft(s, separators.HeadingSeparatorStart.String())
 	case TitleLine:
 		return strings.TrimLeft(strings.TrimRight(s, separators.TitleSeparatorStart.String()), separators.TitleSeparatorStart.String())
 	default:
