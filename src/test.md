@@ -1,9 +1,10 @@
 ##Sign in for email notifications
 
-[i=email, alias=email, text="Enter your email""]
+**Email:**
+[i=email, alias=email]
 
 **I have read rules, and I accept them**
-[i=checkbox, alias=email]
+[i=checkbox,alias=email]
 
 [btn, enabled=email&&checkbox, text="Join newsletter"]
 

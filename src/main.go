@@ -9,16 +9,18 @@ import (
 
 func main() {
 	defer elapsed("Decoding markdown into form")()
+
 	read := content.NewRead()
 	testDat, err := ioutil.ReadFile("src/test.md")
+
 	if err != nil {
 		panic(err)
 	}
+
 	go read.ReadContent(string(testDat))
+
 	form := content.CreateFormFromChannel(read.Channel)
-	for _, line := range form.Fields {
-		println(line.Value)
-	}
+	form.ToExtendedForm()
 }
 
 func elapsed(what string) func() {
