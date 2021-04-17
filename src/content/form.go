@@ -1,13 +1,14 @@
 package content
 
-//Form represents whole form object. Its build from slice of LineField
-type Form struct {
+//BaseForm represents whole form object. Its build from slice of LineField
+//its simplified version of normal form object, which is much more advanced
+type BaseForm struct {
 	Fields []LineField
 }
 
 //NewForm creates new form with fields as slice of size 0
-func NewForm() *Form {
-	return &Form{
+func NewForm() *BaseForm {
+	return &BaseForm{
 		Fields: make([]LineField, 0),
 	}
 }
@@ -27,3 +28,18 @@ const (
 	InputLine
 	ButtonLine
 )
+
+type ExtendedForm struct {
+	Fields []ExtendedLineField
+}
+
+type ExtendedLineField struct {
+	Type ValueType
+	Value string
+	Params []Param
+}
+
+type Param struct {
+	Key string
+	Value string
+}

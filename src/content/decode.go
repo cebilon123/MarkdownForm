@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func CreateFormFromChannel(channel <-chan string) *Form {
+func CreateFormFromChannel(channel <-chan string) *BaseForm {
 	results := NewForm()
 
 	for line := range channel {

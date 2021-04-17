@@ -1,3 +1,2 @@
-# MarkdownForm
-This is compiler for markdown form. Heart and core of the whole application. It compiles given input into functional 
-form. 
+# Project
+This is compiler for markdown form. For given set of rules you can create new form by the usage of markdown-like text.
