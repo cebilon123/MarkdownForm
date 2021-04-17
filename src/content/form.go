@@ -1,7 +1,6 @@
 package content
 
 import (
-	"content/params"
 	"globals/separators"
 	"strings"
 )
@@ -46,7 +45,7 @@ func NewExtendedForm() *ExtendedForm {
 type ExtendedLineField struct {
 	Type   ValueType
 	Value  string
-	Params []params.Param
+	Params []Param
 }
 
 //ToExtendedForm converts BaseForm into ExtendedForm
@@ -66,8 +65,8 @@ func (f *BaseForm) ToExtendedForm() *ExtendedForm {
 //ExtendedLineField with params as nil. If LineField is an input/btn type it will return ExtendedLineField
 //with empty value and slice containing all valid params.
 func (lf *LineField) toExtendedLineField() ExtendedLineField {
-	if params.IsParamContainableType(lf.Type) {
-		tryMapToParams := params.TryMapToParams(lf.Value)
+	if IsParamContainableType(lf.Type) {
+		tryMapToParams := TryMapToParams(lf.Value)
 
 		return ExtendedLineField{
 			Type:   lf.Type,
