@@ -14,7 +14,19 @@ func TestBaseForm_ToExtendedForm(t *testing.T) {
 		fields fields
 		want   *ExtendedForm
 	}{
-		// TODO: Add test cases.
+		{name: "FormWithField_ReturnExtendedFormWithField", fields: fields{[]LineField{
+			{
+				Type:  InputLine,
+				Value: "[i=val, alias=test]",
+			},
+			{
+				Type:  HeadingLine,
+				Value: "##Hello",
+			},
+		}}, want: &ExtendedForm{Fields: []ExtendedLineField{
+			{Type: InputLine, Value: "", Params: []Param{{Key: "i", Value: "val"}, {Key: "alias", Value: "test"}}},
+			{Type: HeadingLine, Value: "Hello", Params: nil},
+		}}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -38,7 +50,32 @@ func TestLineField_ToExtendedLineField(t *testing.T) {
 		fields fields
 		want   ExtendedLineField
 	}{
-		// TODO: Add test cases.
+		{name: "None_ReturnsExtendedLineFieldWithoutParams", fields: fields{
+			Type:  None,
+			Value: "Hello",
+		}, want: ExtendedLineField{
+			Type:   None,
+			Value:  "Hello",
+			Params: nil,
+		}},
+
+		{name: "InputLine_ReturnsExtendedLineFieldWithParams", fields: fields{
+			Type:  InputLine,
+			Value: "[i=val, alias=test]",
+		}, want: ExtendedLineField{
+			Type:  InputLine,
+			Value: "",
+			Params: []Param{
+				{
+					Key:   "i",
+					Value: "val",
+				},
+				{
+					Key:   "alias",
+					Value: "test",
+				},
+			},
+		}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
