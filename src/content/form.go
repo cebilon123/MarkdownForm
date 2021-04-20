@@ -1,6 +1,7 @@
 package content
 
 import (
+	"github.com/cebilon123/tagger"
 	"globals/separators"
 	"strings"
 )
@@ -26,7 +27,7 @@ type LineField struct {
 
 type ValueType int
 const (
-	None ValueType = 0 + iota
+	None ValueType = iota
 	NewLine
 	TitleLine
 	HeadingLine
@@ -46,6 +47,10 @@ type ExtendedLineField struct {
 	Type   ValueType
 	Value  string
 	Params []Param
+}
+
+func (vt ValueType) ResolveHtmlTag() tagger.TagType {
+	return [...]tagger.TagType{tagger.Plain, tagger.Plain, tagger.Paragraph, tagger.Paragraph, tagger.Input, tagger.Button}[vt]
 }
 
 //ToExtendedForm converts BaseForm into ExtendedForm

@@ -1,12 +1,14 @@
 package main
 
 import (
+	"build"
 	"content"
 	"fmt"
 	"io/ioutil"
 	"time"
 )
 
+//TODO After implementing html convert package back to this and use it to convert markdowns into form
 func main() {
 	defer elapsed("Decoding markdown into form")()
 
@@ -19,8 +21,10 @@ func main() {
 
 	go read.ReadContent(string(testDat))
 
-	form := content.CreateFormFromChannel(read.Channel)
-	form.ToExtendedForm()
+	form := content.CreateFormFromChannel(read.Channel).ToExtendedForm()
+
+	output := build.Output{Form: form}
+	println(output.Build())
 }
 
 func elapsed(what string) func() {
